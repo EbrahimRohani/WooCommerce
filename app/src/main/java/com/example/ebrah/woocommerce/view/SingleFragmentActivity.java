@@ -1,10 +1,12 @@
-package com.example.ebrah.woocommerce;
+package com.example.ebrah.woocommerce.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+
+import com.example.ebrah.woocommerce.R;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
     public abstract Fragment createFragment();
