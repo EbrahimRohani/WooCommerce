@@ -11,7 +11,5 @@ import retrofit2.http.Query;
 public interface Api {
 
     @GET("products/?consumer_key=ck_06ec2d6ff800054efbe42aecfb1df9bfc1022bd1&consumer_secret=cs_be6b76294fa9f74b3b7ee810f616db5ee76ea526")
-//    Call<List<Product>> getProductsByDate(@Query("orderby") String orderBy);
-    Call<List<Product>> getProductsByDate(@Query("orderby") String orderBy);
-
+    Call<List<Product>> getProducts(@Query("orderby") String orderBy);
 }

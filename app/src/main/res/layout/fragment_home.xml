@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -14,17 +14,31 @@
 
             <ImageView
                 android:id="@+id/slider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="400dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@+id/newest_products_text_view"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/product_place_holder" />
+
+            <TextView
+                android:id="@+id/newest_products_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/newest_products_text_view"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_view_newest_products"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/slider" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_newest_products"
@@ -33,7 +47,56 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/slider">
+                app:layout_constraintBottom_toTopOf="@+id/most_popular_products_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/newest_products_text_view">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/most_popular_products_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/most_popular_products_text_view"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_view_most_popular_products"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_view_newest_products" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_most_popular_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/most_rated_products_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/most_popular_products_text_view">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/most_rated_products_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/most_rated_products_text_view"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_view_most_rated_products"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_view_most_popular_products" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_most_rated_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/most_rated_products_text_view">
 
             </androidx.recyclerview.widget.RecyclerView>
         </androidx.constraintlayout.widget.ConstraintLayout>

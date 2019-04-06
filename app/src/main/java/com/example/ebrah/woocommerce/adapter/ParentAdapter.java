@@ -1,5 +1,6 @@
 package com.example.ebrah.woocommerce.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -12,16 +13,22 @@ import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class ParentAdapter<M, B extends ViewDataBinding> extends RecyclerView.Adapter<ParentAdapter.ParentViewHolder<B>> {
+public abstract class ParentAdapter<M, B extends ViewDataBinding, V extends ViewModel> extends RecyclerView.Adapter<ParentAdapter.ParentViewHolder<B>> {
 
-    List<M> mList;
+
+    public static final String TAG = "noob";
+    private List<M> mList;
 
     @LayoutRes
     public abstract int layoutId();
 
-    public abstract ViewModel viewModel();
+    public abstract V viewModel();
 
     public abstract int variableId();
+
+    public abstract void setModel(M m);
+
+
 
     public ParentAdapter(List<M> mList) {
         this.mList = mList;
@@ -41,16 +48,16 @@ public abstract class ParentAdapter<M, B extends ViewDataBinding> extends Recycl
 
     @Override
     public void onBindViewHolder(@NonNull ParentViewHolder holder, int position) {
+        Log.i(TAG, "onBindViewHolder: " + variableId());
         holder.getBinding().setVariable(variableId(), viewModel());
+        setModel(mList.get(position));
         holder.getBinding().executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mList.size();
     }
-
-
 
     public static class ParentViewHolder<V extends ViewDataBinding> extends RecyclerView.ViewHolder {
         private V v;

@@ -1,7 +1,7 @@
 package com.example.ebrah.woocommerce.viewmodel;
 
 import android.content.Context;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.ebrah.woocommerce.R;
@@ -11,6 +11,7 @@ import com.example.ebrah.woocommerce.repository.ProductRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.LiveData;
@@ -19,7 +20,6 @@ import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends ViewModel {
     private static final String TAG = "noob";
-
     private MutableLiveData<List<Image>> mImageListMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Product> mProductLiveData = new MutableLiveData<>();
 
@@ -45,10 +45,6 @@ public class HomeViewModel extends ViewModel {
         mImageListMutableLiveData.setValue(product.getImages());
     }
 
-    public LiveData<Product> getProductLiveData() {
-        return mProductLiveData;
-    }
-
     public String getProductTitle() {
         if (mProductLiveData.getValue().getName() != null)
             return mProductLiveData.getValue().getName();
@@ -58,18 +54,24 @@ public class HomeViewModel extends ViewModel {
 
     public String getProductPrice() {
         if (mProductLiveData.getValue().getPrice() != null)
-            return mProductLiveData.getValue().getPrice();
+            return mProductLiveData.getValue().getPrice()+ " " + "تومان";
         else
             return "Sorry! product price not found...";
     }
 
-    public LiveData<List<Product>> getProductListLiveData(Context context) {
-        return ProductRepository.getInstance(context).getProductListMutableLiveData();
+    public LiveData<List<Product>> getProductListByDateLiveData(Context context) {
+        return ProductRepository.getInstance(context).getProductListByDateMutableLiveData();
     }
 
-    public List<Product> getProductList(Context context) {
-        return ProductRepository.getInstance(context).getProductListMutableLiveData().getValue();
+    public LiveData<List<Product>> getProductListByPopularityLiveData(Context context){
+        return ProductRepository.getInstance(context).getProductListByPopularityMutabaleLiveData();
     }
 
+    public LiveData<List<Product>> getProductListByRatingLiveData(Context context){
+        return ProductRepository.getInstance(context).getProductListByRatingMutableLiveData();
+    }
 
+    public void onClick(View view){
+
+    }
 }

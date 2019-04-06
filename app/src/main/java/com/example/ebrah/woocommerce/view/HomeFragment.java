@@ -32,7 +32,9 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "noob";
     private FragmentHomeBinding mFragmentHomeBinding;
     private HomeViewModel mHomeViewModel;
-    private NewestItemsAdapter mNewestItemsAdapter;
+    private ProductsAdapter mNewestProductsAdapter;
+    private ProductsAdapter mMostPopularProductsAdapter;
+    private ProductsAdapter mMostRatedProductAdapter;
 
 
     public static HomeFragment newInstance() {
@@ -59,12 +61,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         mFragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         mFragmentHomeBinding.setLifecycleOwner(this);
-        List<Product> productsList = mHomeViewModel.getProductList(getActivity());
-//        Log.i(TAG, "onCreateView: " + productsList.size());
-        if(productsList!= null) {
-            mNewestItemsAdapter = new NewestItemsAdapter(productsList);
-            mFragmentHomeBinding.recyclerViewNewestProducts.setAdapter(mNewestItemsAdapter);
-        }
         observeViewModel(mHomeViewModel);
         Log.i(TAG, "ta inja ");
         return mFragmentHomeBinding.getRoot();
@@ -72,44 +68,57 @@ public class HomeFragment extends Fragment {
     }
 
     private void observeViewModel(HomeViewModel homeViewModel) {
-        homeViewModel.getProductListLiveData(getActivity()).observe(this, new Observer<List<Product>>() {
+        homeViewModel.getProductListByDateLiveData(getActivity()).observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
-                if(products != null) {
-                    Log.i(TAG, "onChanged: Called");
-                    mNewestItemsAdapter = new NewestItemsAdapter(products);
-                    mNewestItemsAdapter.setProductList(products);
-                    mFragmentHomeBinding.recyclerViewNewestProducts.setAdapter(mNewestItemsAdapter);
-                    Log.i(TAG, "onChanged: LIST = " + products.size());
-                }
+                mNewestProductsAdapter = new ProductsAdapter(products);
+                mNewestProductsAdapter.setProductList(products);
+                mFragmentHomeBinding.recyclerViewNewestProducts.setAdapter(mNewestProductsAdapter);
+            }
+        });
+
+        homeViewModel.getProductListByPopularityLiveData(getActivity()).observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                mMostPopularProductsAdapter = new ProductsAdapter(products);
+                mMostPopularProductsAdapter.setProductList(products);
+                mFragmentHomeBinding.recyclerViewMostPopularProducts.setAdapter(mMostPopularProductsAdapter);
+            }
+        });
+
+        homeViewModel.getProductListByRatingLiveData(getActivity()).observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                mMostRatedProductAdapter = new ProductsAdapter(products);
+                mMostRatedProductAdapter.setProductList(products);
+                mFragmentHomeBinding.recyclerViewMostRatedProducts.setAdapter(mMostRatedProductAdapter);
             }
         });
     }
 
-    public class NewestViewHolder extends RecyclerView.ViewHolder{
+    public class ProductsViewHolder extends RecyclerView.ViewHolder {
         private ProductListItemBinding mProductListItemBinding;
         private Product mProduct;
 
-        public NewestViewHolder(@NonNull ProductListItemBinding productListItemBinding) {
+        public ProductsViewHolder(@NonNull ProductListItemBinding productListItemBinding) {
             super(productListItemBinding.getRoot());
             mProductListItemBinding = productListItemBinding;
         }
 
-        public void bind(Product product){
+        public void bind(Product product) {
             mProduct = product;
             mProductListItemBinding.setHomeviewmodel(mHomeViewModel);
             mHomeViewModel.setProduct(product);
-
-
+            mFragmentHomeBinding.executePendingBindings();
         }
 
     }
 
-    public class NewestItemsAdapter extends RecyclerView.Adapter<NewestViewHolder>{
+    public class ProductsAdapter extends RecyclerView.Adapter<ProductsViewHolder> {
 
         List<Product> mProductList;
 
-        public NewestItemsAdapter(List<Product> productList) {
+        public ProductsAdapter(List<Product> productList) {
             mProductList = productList;
         }
 
@@ -119,30 +128,29 @@ public class HomeFragment extends Fragment {
 
         @NonNull
         @Override
-        public NewestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            ProductListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()),R.layout.product_list_item, parent, false);
-            return new NewestViewHolder(binding);
+        public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            ProductListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getActivity()), R.layout.product_list_item, parent, false);
+            return new ProductsViewHolder(binding);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull NewestViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ProductsViewHolder holder, int position) {
             holder.bind(mProductList.get(position));
         }
 
         @Override
         public int getItemCount() {
-            if(mProductList != null)
+            if (mProductList != null)
                 return mProductList.size();
             else
                 return 0;
         }
     }
 
-//    public class NewestItemsAdapter extends ParentAdapter<Product, FragmentHomeBinding> {
+//    public class NewestItemsAdapter extends ParentAdapter<Product, ProductListItemBinding, HomeViewModel>{
 //
-//
-//        public NewestItemsAdapter(List<Product> mList) {
-//            super(mList);
+//        public NewestItemsAdapter(List<Product> products) {
+//            super(products);
 //        }
 //
 //        @Override
@@ -151,13 +159,21 @@ public class HomeFragment extends Fragment {
 //        }
 //
 //        @Override
-//        public ViewModel viewModel() {
-//            return new HomeViewModel();
+//        public HomeViewModel viewModel() {
+//            return null;
 //        }
 //
 //        @Override
 //        public int variableId() {
 //            return BR.homeviewmodel;
 //        }
+//
+//        @Override
+//        public void setModel(Product product) {
+//            viewModel().setProduct(product);
+//        }
+//
+//
 //    }
+
 }

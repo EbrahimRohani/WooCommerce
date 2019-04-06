@@ -4,4 +4,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="product_title_not_found">Sorry! Product title not found…</string>
+    <string name="product_price_financial_unit">تومان</string>
+    <string name="newest_products_text_view">جدیدترین محصولات</string>
+    <string name="most_popular_products_text_view">پربازدیدترین محصولات</string>
+    <string name="most_rated_products_text_view">بهترین محصولات</string>
 </resources>
