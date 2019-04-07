@@ -8,4 +8,5 @@
     <string name="newest_products_text_view">جدیدترین محصولات</string>
     <string name="most_popular_products_text_view">پربازدیدترین محصولات</string>
     <string name="most_rated_products_text_view">بهترین محصولات</string>
+    <string name="categories_nav_menu_item">دسته بندی ها</string>
 </resources>

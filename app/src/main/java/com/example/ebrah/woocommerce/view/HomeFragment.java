@@ -1,10 +1,13 @@
 package com.example.ebrah.woocommerce.view;
 
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -56,14 +59,17 @@ public class HomeFragment extends Fragment {
         mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mFragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mFragmentHomeBinding.toolbar);
+
         mFragmentHomeBinding.setLifecycleOwner(this);
         observeViewModel(mHomeViewModel);
-        Log.i(TAG, "ta inja ");
         return mFragmentHomeBinding.getRoot();
+
 
     }
 
@@ -107,12 +113,15 @@ public class HomeFragment extends Fragment {
             productListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //TODO: must fix ImageView unclickable issue.
                     getFragmentManager().beginTransaction().replace(R.id.single_fragment_container, ProductDetailFragment.newInstance(mProduct.getId())).addToBackStack("hello").commit();
                 }
             });
         }
 
         public void bind(Product product) {
+            //TODO: must fix initial item bindings which binds the third item of every list for all the list, and gets fixed by swiping and refreshing...
+            //TODO: must consider recycler view pagination
             mProduct = product;
             mProductListItemBinding.setHomeviewmodel(mHomeViewModel);
             mHomeViewModel.setProduct(product);

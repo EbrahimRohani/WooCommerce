@@ -3,3 +3,4 @@ Consumer key: ck_06ec2d6ff800054efbe42aecfb1df9bfc1022bd1
 Consumer secret: cs_be6b76294fa9f74b3b7ee810f616db5ee76ea526
 
 password: 5R0wul&P4JKzd$67%rC!txJf
+Documentation: https://woocommerce.github.io/woocommerce-rest-api-docs

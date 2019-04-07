@@ -77,6 +77,7 @@ public class ImagePagerFragment extends Fragment {
             @Override
             public void onChanged(Product product) {
                 //TODO: need better product searching for better performance of image searching.
+                //TODO: this can be handle better on MVVM architecture, by giving image list and position to HomeViewModel and then set image by data binding in layouts.
 
                 Log.i(TAG, "onChanged: Pager Called ");
                 mProduct = product;
