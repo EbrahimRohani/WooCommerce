@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Product {
+
+    @SerializedName("id")
+    private int mId;
+
     @SerializedName("name")
     private String mName;
 
@@ -14,10 +18,15 @@ public class Product {
     @SerializedName("images")
     private List<Image> mImages;
 
-    public Product(String name, String price, List<Image> images) {
+    public Product(int id, String name, String price, List<Image> images) {
+        mId = id;
         mName = name;
         mPrice = price;
         mImages = images;
+    }
+
+    public int getId() {
+        return mId;
     }
 
     public String getName() {

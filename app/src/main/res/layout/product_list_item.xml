@@ -23,7 +23,9 @@
         style="@style/Widget.MaterialComponents.CardView"
         tools:targetApi="lollipop"
         android:focusable="true"
-        android:onClick="">
+        >
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -39,8 +41,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/product_place_holder"
-                tools:srcCompat="@tools:sample/avatars[0]"
-                app:imageUrl="@{homeviewmodel.imagePath}"/>
+                app:imageUrl="@{homeviewmodel.imagePath}"
+                android:onClick="@{() -> homeviewmodel.onClick()}"/>
+
 
             <TextView
                 android:id="@+id/product_name"

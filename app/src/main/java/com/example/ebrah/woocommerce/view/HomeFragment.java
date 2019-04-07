@@ -103,6 +103,13 @@ public class HomeFragment extends Fragment {
         public ProductsViewHolder(@NonNull ProductListItemBinding productListItemBinding) {
             super(productListItemBinding.getRoot());
             mProductListItemBinding = productListItemBinding;
+
+            productListItemBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager().beginTransaction().replace(R.id.single_fragment_container, ProductDetailFragment.newInstance(mProduct.getId())).addToBackStack("hello").commit();
+                }
+            });
         }
 
         public void bind(Product product) {
