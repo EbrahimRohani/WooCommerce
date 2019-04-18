@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="homeviewmodel"
-            type="com.example.ebrah.woocommerce.viewmodel.HomeViewModel"/>
+            name="productviewmodel"
+            type="com.example.ebrah.woocommerce.viewmodel.ProductViewModel"/>
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -21,9 +21,7 @@
         android:clickable="true"
         android:elevation="100dp"
         style="@style/Widget.MaterialComponents.CardView"
-        tools:targetApi="lollipop"
-        android:focusable="true"
-        >
+        android:focusable="true">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,9 +38,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:imageUrl="@{productviewmodel.imagePath}"
                 app:srcCompat="@drawable/product_place_holder"
-                app:imageUrl="@{homeviewmodel.imagePath}"
-                android:onClick="@{() -> homeviewmodel.onClick()}"/>
+                android:onClick="@{(view)->productviewmodel.onClick(view)}"/>
 
 
             <TextView
@@ -54,13 +52,14 @@
                 app:layout_constraintEnd_toEndOf="@+id/product_image"
                 app:layout_constraintStart_toStartOf="@+id/product_image"
                 app:layout_constraintTop_toBottomOf="@+id/product_image"
-                android:text="@{homeviewmodel.productTitle}"
+                android:text="@{productviewmodel.productTitle}"
                 android:maxEms="5"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:minLines="2"
                 android:singleLine="false"
-                tools:text = "Laptop"/>
+                tools:text = "Laptop"
+                android:onClick="@{(view)->productviewmodel.onClick(view)}"/>
 
             <View
                 android:id="@+id/separator_line"
@@ -70,7 +69,8 @@
                 android:background="@android:color/darker_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/product_name" />
+                app:layout_constraintTop_toBottomOf="@id/product_name"
+                android:onClick="@{(view)->productviewmodel.onClick(view)}"/>
 
             <TextView
                 android:id="@+id/product_price"
@@ -79,12 +79,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{homeviewmodel.productPrice}"
+                android:text="@{productviewmodel.productPrice}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/product_name"
                 app:layout_constraintStart_toStartOf="@+id/product_name"
                 app:layout_constraintTop_toBottomOf="@+id/separator_line"
-                tools:text="3,000,000" />
+                tools:text="3,000,000"
+                android:onClick="@{(view)-> productviewmodel.onClick(view)}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

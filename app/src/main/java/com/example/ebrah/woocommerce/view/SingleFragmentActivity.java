@@ -13,6 +13,7 @@ import com.example.ebrah.woocommerce.databinding.FragmentHomeBinding;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
     private ActivitySingleFragmentActivityBinding mActivitySingleFragmentActivityBinding;
+
     public abstract Fragment createFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

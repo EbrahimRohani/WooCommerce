@@ -8,13 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +19,7 @@ import android.view.ViewGroup;
 import com.example.ebrah.woocommerce.R;
 import com.example.ebrah.woocommerce.databinding.FragmentProductDetailBinding;
 import com.example.ebrah.woocommerce.model.Product;
-import com.example.ebrah.woocommerce.repository.ProductRepository;
-import com.example.ebrah.woocommerce.viewmodel.HomeViewModel;
+import com.example.ebrah.woocommerce.viewmodel.ProductViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +32,7 @@ public class ProductDetailFragment extends Fragment {
     private FragmentProductDetailBinding mFragmentProductDetailBinding;
     private int mProductId;
     private Product mProduct;
-    private HomeViewModel mHomeViewModel;
+    private ProductViewModel mProductViewModel;
 
     public static ProductDetailFragment newInstance(int id) {
 
@@ -55,7 +51,7 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        mProductViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
         mProductId = getArguments().getInt(PRODUCT_ID);
 
     }
@@ -64,12 +60,12 @@ public class ProductDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mFragmentProductDetailBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_detail, container, false);
-        observeViewModel(mHomeViewModel);
+        observeViewModel(mProductViewModel);
         return mFragmentProductDetailBinding.getRoot();
     }
 
-    public void observeViewModel(HomeViewModel homeViewModel){
-        homeViewModel.findProductById(getActivity(),mProductId).observe(this, new Observer<Product>() {
+    public void observeViewModel(ProductViewModel productViewModel){
+        productViewModel.findProductById(getActivity(),mProductId).observe(this, new Observer<Product>() {
             @Override
             public void onChanged(Product product) {
                 mProduct = product;
@@ -95,7 +91,7 @@ public class ProductDetailFragment extends Fragment {
         @Override
         public int getCount() {
             if(mProduct!= null){
-                int imageListSize = mProduct.getImages().size();
+                int imageListSize = mProduct.getProductImages().size();
                 if(imageListSize != 0) {
                     return imageListSize;
                 }

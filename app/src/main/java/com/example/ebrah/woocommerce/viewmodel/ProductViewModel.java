@@ -1,30 +1,32 @@
 package com.example.ebrah.woocommerce.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.ebrah.woocommerce.R;
-import com.example.ebrah.woocommerce.model.Image;
+import com.example.ebrah.woocommerce.model.ProductImage;
 import com.example.ebrah.woocommerce.model.Product;
+import com.example.ebrah.woocommerce.model.enums.ListOrder;
 import com.example.ebrah.woocommerce.repository.ProductRepository;
 import com.example.ebrah.woocommerce.view.ProductDetailFragment;
+import com.example.ebrah.woocommerce.view.ProductListFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class HomeViewModel extends ViewModel {
+public class ProductViewModel extends ViewModel {
     private static final String TAG = "noob";
-    private MutableLiveData<List<Image>> mImageListMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<ProductImage>> mProductImageListMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Product> mProductMutableLiveData = new MutableLiveData<>();
-    //private int mImagePosition = 0;
-
-//    public void setImagePosition(int imagePosition) {
-//        mImagePosition = imagePosition;
-//    }
 
     @BindingAdapter("imageUrl")
     public static void setImageUrl(ImageView imageView, String imageUrl) {
@@ -35,11 +37,10 @@ public class HomeViewModel extends ViewModel {
     }
 
     public String getImagePath() {
-//        return mImageListMutableLiveData.getValue().get(mImagePosition).getPathUrl();
 
-        for (Image image : mImageListMutableLiveData.getValue()) {
-            if (image != null ){
-                return image.getPathUrl();
+        for (ProductImage productImage : mProductImageListMutableLiveData.getValue()) {
+            if (productImage != null ){
+                return productImage.getPathUrl();
 
             }
         }
@@ -47,8 +48,9 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void setProduct(Product product) {
+        Log.i(TAG, "setProduct: " + product.getId());
         mProductMutableLiveData.setValue(product);
-        mImageListMutableLiveData.setValue(product.getImages());
+        mProductImageListMutableLiveData.setValue(product.getProductImages());
     }
 
     public String getProductTitle() {
@@ -69,24 +71,26 @@ public class HomeViewModel extends ViewModel {
         return mProductMutableLiveData.getValue().getId();
     }
 
-    public MutableLiveData<List<Product>> getProductListByDateLiveData(Context context) {
-        return ProductRepository.getInstance(context).getProductListByDateMutableLiveData();
-    }
+    public MutableLiveData<List<Product>> getProductListByOrderLiveData(Context context, ListOrder listOrder, int pageNumber) {
+        switch (listOrder){
+            case ORDER_BY_DATE:
+                return ProductRepository.getInstance(context).getProductListByDateMutableLiveData(pageNumber);
 
-    public MutableLiveData<List<Product>> getProductListByPopularityLiveData(Context context){
-        return ProductRepository.getInstance(context).getProductListByPopularityMutableLiveData();
-    }
+            case ORDER_BY_POPULARITY:
+                return ProductRepository.getInstance(context).getProductListByPopularityMutableLiveData(pageNumber);
 
-    public MutableLiveData<List<Product>> getProductListByRatingLiveData(Context context){
-        return ProductRepository.getInstance(context).getProductListByRatingMutableLiveData();
+            case ORDER_BY_RATING:
+                return ProductRepository.getInstance(context).getProductListByRatingMutableLiveData(pageNumber);
+        }
+        return null;
     }
 
     public MutableLiveData<Product> findProductById(Context context, int id){
         return ProductRepository.getInstance(context).findProductById(id);
     }
 
-    public void onClick(){
-
-        ProductDetailFragment.newInstance(getProductId());
+    public void onClick(View view){
+        Log.i(TAG, "onClick: called " + getProductId());
+        ((AppCompatActivity)view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.single_fragment_container, ProductDetailFragment.newInstance(getProductId())).addToBackStack(null).commit();
     }
 }

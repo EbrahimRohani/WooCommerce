@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
         <item
-            android:id="@+id/categories"
-            android:title="@string/categories_nav_menu_item"/>
+            android:id="@+id/categories_nav_item"
+            android:title="@string/categories_nav_menu_item" />
         <item
-            android:id="@+id/newest_products"
+            android:id="@+id/newest_products_nav_item"
             android:title="@string/newest_products_text_view"/>
         <item
-            android:id="@+id/most_popular_products"
+            android:id="@+id/most_popular_products_nav_item"
             android:title="@string/most_popular_products_text_view"/>
         <item
-            android:id="@+id/most_rated_products"
+            android:id="@+id/most_rated_products_nav_item"
             android:title="@string/most_rated_products_text_view"/>
     </group>
 

@@ -16,13 +16,13 @@ public class Product {
     private String mPrice;
 
     @SerializedName("images")
-    private List<Image> mImages;
+    private List<ProductImage> mProductImages;
 
-    public Product(int id, String name, String price, List<Image> images) {
+    public Product(int id, String name, String price, List<ProductImage> productImages) {
         mId = id;
         mName = name;
         mPrice = price;
-        mImages = images;
+        mProductImages = productImages;
     }
 
     public int getId() {
@@ -37,7 +37,7 @@ public class Product {
         return mPrice;
     }
 
-    public List<Image> getImages() {
-        return mImages;
+    public List<ProductImage> getProductImages() {
+        return mProductImages;
     }
 }

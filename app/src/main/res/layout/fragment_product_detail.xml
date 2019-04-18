@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="homeviewmodel"
-            type="com.example.ebrah.woocommerce.viewmodel.HomeViewModel"/>
+            name="productviewmodel"
+            type="com.example.ebrah.woocommerce.viewmodel.ProductViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
